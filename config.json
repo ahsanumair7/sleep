@@ -1,0 +1,7 @@
+{
+    "unique_name": "sleep",
+    "matching_hotwords": [
+        "go to sleep mode",
+        "sleep"
+    ]
+}
