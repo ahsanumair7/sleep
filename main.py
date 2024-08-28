@@ -6,16 +6,16 @@ from src.agent.io_interface import (
     SynchronousTTT,
     SharedValue,
 )
-from src.system_conf import (
-    SLEEP_SOUND,
-    SLEEP_PROMPT,
-)
 from src.utils.sound_player import play_sound
 from src.main import AgentWorker
 import os
 import json
 
 # import asyncio
+
+SLEEP_SOUND = "src/sounds/sleep.mp3"
+# Prompts
+SLEEP_PROMPT = "Going in Sleep Mode!"
 
 
 class SleepCapability(MatchingCapability):
@@ -32,15 +32,16 @@ class SleepCapability(MatchingCapability):
 
     def call(
         self,
-        msg: str,
-        agent: BotAgent,
-        text_respond: SynchronousTTT,
-        speak_respond: None,
-        audio: str,
         worker: AgentWorker,
-        meta: dict[str, Any],
         interrupt_str: SharedValue,
     ):
+        msg = worker.final_user_input
+        agent = worker.agent
+        text_respond = worker.ttt_sync
+        speak_respond = worker.tts_ios
+        audio = "/tmp/the_file.wav"
+        meta = {}
+        
         if worker.bot_awake_event.is_set():
             logging.info("Going to sleep mode")
             worker.bot_is_speaking_event.clear()
