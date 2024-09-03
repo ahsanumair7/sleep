@@ -11,12 +11,6 @@ from src.main import AgentWorker
 import os
 import json
 
-# import asyncio
-
-SLEEP_SOUND = "src/sounds/sleep.mp3"
-# Prompts
-SLEEP_PROMPT = "Going in Sleep Mode!"
-
 
 class SleepCapability(MatchingCapability):
     @classmethod
@@ -39,15 +33,7 @@ class SleepCapability(MatchingCapability):
         agent = worker.agent
         text_respond = worker.ttt_sync
         speak_respond = worker.tts_ios
-        audio = "/tmp/the_file.wav"
         meta = {}
-
-        # Logging examples
-        worker.editor_logging_handler.info("Info logging...")
-        worker.editor_logging_handler.warning("Warning logging...")
-        worker.editor_logging_handler.debug("Warning logging...")
-        worker.editor_logging_handler.error("Warning logging...")
-        worker.editor_logging_handler.critical("Warning logging...")
         
         if worker.bot_awake_event.is_set():
             logging.info("Going to sleep mode")
@@ -55,6 +41,5 @@ class SleepCapability(MatchingCapability):
             worker.bot_awake_event.clear()
             worker.user_is_speaking_event.clear()
             worker.user_is_finished_speak_event.set()
-            play_sound(SLEEP_SOUND)
 
             return SLEEP_PROMPT
