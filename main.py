@@ -11,6 +11,8 @@ from src.main import AgentWorker
 import os
 import json
 
+SLEEP_PROMPT = "Going in Sleep Mode!"
+
 
 class SleepCapability(MatchingCapability):
     @classmethod
