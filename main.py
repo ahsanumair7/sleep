@@ -1,18 +1,9 @@
-import logging
-from typing import Any
-from src.agent.capability import MatchingCapability
-from src.agent.base import BotAgent
-from src.agent.io_interface import (
-    SynchronousTTT,
-    SharedValue,
-)
-from src.utils.sound_player import play_sound
-from src.main import AgentWorker
-import os
 import json
-
+import os
+from src.agent.capability import MatchingCapability
+from src.main import AgentWorker
+# Prompts
 SLEEP_PROMPT = "Going in Sleep Mode!"
-
 
 class SleepCapability(MatchingCapability):
     @classmethod
@@ -29,19 +20,10 @@ class SleepCapability(MatchingCapability):
     def call(
         self,
         worker: AgentWorker,
-        interrupt_str: SharedValue,
-    ):
-        msg = worker.final_user_input
-        agent = worker.agent
-        text_respond = worker.ttt_sync
-        speak_respond = worker.tts_ios
-        meta = {}
-        
+    ):        
         if worker.bot_awake_event.is_set():
-            logging.info("Going to sleep mode")
             worker.bot_is_speaking_event.clear()
             worker.bot_awake_event.clear()
             worker.user_is_speaking_event.clear()
             worker.user_is_finished_speak_event.set()
-
             return SLEEP_PROMPT
